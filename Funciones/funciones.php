@@ -28,28 +28,51 @@
         return $estado;
     }
 
+    function leerArchivoUsuarios(){
+
+        $archivo = fopen('Subidas/usuarios.json',"r");
+        $usuarios = fread($archivo,filesize('Subidas/usuarios.json'));
+        fclose($archivo);
+
+        return $usuarios;
+    }
+
+    function escribirArchivoUsuarios($usuarioAgregado){
+
+        $archivo = fopen('Subidas/usuarios.json',"w");
+        fwrite($archivo, $usuarioAgregado);
+        fclose($archivo);
+    }
+
     function buscarUsuario($nombreUsuario){
 
         $estado = false;
 
-        $archivo = fopen('subidas/usuarios.json',"r");
-
-        $usuarios = fread($archivo,filesize('subidas/usuarios.json'));
-
-        fclose($archivo);
+        $usuarios = leerArchivoUsuarios();
 
         $usuariosArray = json_decode($usuarios);
         //var_dump($usuariosArray);
+
         foreach($usuariosArray as $usuarioGenerico){
 
+            if($usuarioGenerico->{"usuario"} == $nombreUsuario){
+                $estado = true;
+                return $estado;
+            }
+            
+            /*
+            $usuarioPrueba = new Usuario();
             foreach($usuarioGenerico as $atr => $valorAtr){
 
-                if($atr == "usuario" && $valorAtr == $nombreUsuario){
-                    
-                    $estado = true;
-                    return $estado;
-                }
+                $usuarioPrueba->{$atr} = $valorAtr;
             }
+            //var_dump($usuarioPrueba);
+            if($usuarioPrueba->GetUsuario() == $nombreUsuario){
+                    
+                $estado = true;
+                return $estado;
+            }
+            */
         }
 
         return $estado;
@@ -57,32 +80,22 @@
 
     function agregarUsuario($usuario, $contrasena){
 
-        $estado = false;
+        $usuarios = leerArchivoUsuarios();
+        //var_dump($usuarios);
 
-        $archivo = fopen('subidas/usuarios.json',"w");
+        $usuariosArray = json_decode($usuarios);
 
         $tempUsuario = new Usuario();
 
-        $tempUsuario->SetNombre($usuario);
+        $tempUsuario->SetUsuario($usuario);
         $tempUsuario->SetContrasena($contrasena);
 
-        fwrite($archivo, $tempUsuario);
+        array_push($usuariosArray, $tempUsuario);
+        //var_dump($usuariosArray);
 
-        fclose($archivo);
+        $usuarioAgregado = json_encode($usuariosArray);
+
+        escribirArchivoUsuarios($usuarioAgregado);
     }
-
-    //$archivo = fopen('../subidas/usuarios.json',"w");
-    /*
-    $tempUsuario = new Usuario();
-
-    $tempUsuario->SetNombre("lucas");
-    $tempUsuario->SetContrasena("ASD123asd");
-
-    var_dump($tempUsuario);
-    */
-    //Error
-    //fwrite($archivo, $tempUsuario);
-
-    //fclose($archivo);
 
 ?>

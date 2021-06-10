@@ -1,16 +1,16 @@
 <?php
     class Usuario {
   
-        private $nombre;
-        private $contrasena;
+        public $usuario;
+        public $contrasena;
 
         public function __construct(){
             
         }
 
-        public function SetNombre($nombre){
+        public function SetUsuario($usuario){
             
-            $this->nombre = $nombre;
+            $this->usuario = $usuario;
         }
 
         public function SetContrasena($contrasena){
@@ -18,9 +18,9 @@
             $this->contrasena = $contrasena;
         }
 
-        public function GetNombre(){
+        public function GetUsuario(){
             
-            return $this->nombre;
+            return $this->usuario;
         }
 
         public function GetContrasena(){

@@ -27,7 +27,7 @@
         $nombre = $_POST['usuario'];
         $contrasena = $_POST['contra'];
         
-        if( compararContrasena( leerArchivo('subidas/' . $nombre . '.txt'), $contrasena ) ){
+        if( compararContrasena( leerArchivo('Subidas/' . $nombre . '.txt'), $contrasena ) ){
             echo 'perfil.html';
         }
         else{
@@ -52,24 +52,16 @@
         $nuevoUsuario = $_POST['nuevoUsuario'];
         $nuevaContra = $_POST['nuevaContra'];
 
-        if( agregarUsuario($nuevoUsuario, $nuevaContra) ){
-            echo true;
-        }
-        else{
-            echo false;
-        }
+        agregarUsuario($nuevoUsuario, $nuevaContra);
+        echo "Usuario creado correctamente";
     }
 
-    if( isset($_FILES['nuevaFoto']) ){
+    if( isset($_POST['nuevoUsuario']) && isset($_FILES['nuevaFoto'])){
 
-        $usuario_nuevo = $_POST['usuarioNuevo'];
+        $usuario_nuevo = $_POST['nuevoUsuario'];
 
-        if( buscarUsuario($usuario_nuevo) ){
-            echo true;
-        }
-        else{
-            echo false;
-        }
+        $nombreFoto = 'Subidas/' . $usuario_nuevo . substr($_FILES['nuevaFoto']['name'], -4);
+        move_uploaded_file($_FILES['nuevaFoto']['tmp_name'], $nombreFoto);
     }
 
 ?>
