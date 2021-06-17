@@ -8,22 +8,22 @@
             
         }
 
-        public function SetUsuario($usuario){
+        public function setUsuario($usuario){
             
             $this->usuario = $usuario;
         }
 
-        public function SetContrasena($contrasena){
+        public function setContrasena($contrasena){
             
             $this->contrasena = $contrasena;
         }
 
-        public function GetUsuario(){
+        public function getUsuario(){
             
             return $this->usuario;
         }
 
-        public function GetContrasena(){
+        public function getContrasena(){
             
             return $this->contrasena;
         }

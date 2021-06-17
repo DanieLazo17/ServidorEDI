@@ -6,6 +6,27 @@
         return 1;
     }
 
+    function buscarNombreUsuario($nombreUsuario, $contrasenaUsuario){
+        $usuarios = leerArchivoUsuarios();
+
+        $usuariosArray = json_decode($usuarios);
+        
+        $resultado = array_search($nombreUsuario, array_column($usuariosArray, 'usuario'));
+
+        if($resultado === false){
+            return $resultado;
+        }
+
+        $tempUsuario = new Usuario();
+        $tempUsuario->setUsuario($usuariosArray[$resultado]->{"usuario"});
+        $tempUsuario->setContrasena($usuariosArray[$resultado]->{"contrasena"});
+
+        if($tempUsuario->getContrasena() == $contrasenaUsuario){
+            $resultado = true;
+            return $resultado;
+        }
+    }
+
     function leerArchivo($nombreArchivo){
 
         $archivo = fopen($nombreArchivo,"r");
@@ -37,45 +58,23 @@
         return $usuarios;
     }
 
-    function escribirArchivoUsuarios($usuarioAgregado){
+    function escribirArchivoUsuarios($usuariosString){
 
         $archivo = fopen('Subidas/usuarios.json',"w");
-        fwrite($archivo, $usuarioAgregado);
+        fwrite($archivo, $usuariosString);
         fclose($archivo);
     }
 
     function buscarUsuario($nombreUsuario){
 
-        $estado = false;
-
         $usuarios = leerArchivoUsuarios();
 
         $usuariosArray = json_decode($usuarios);
         //var_dump($usuariosArray);
+        //var_dump(array_search($nombreUsuario, array_column($usuariosArray, 'usuario')));
+        $resultado = in_array($nombreUsuario, array_column($usuariosArray, 'usuario'));
 
-        foreach($usuariosArray as $usuarioGenerico){
-
-            if($usuarioGenerico->{"usuario"} == $nombreUsuario){
-                $estado = true;
-                return $estado;
-            }
-            
-            /*
-            $usuarioPrueba = new Usuario();
-            foreach($usuarioGenerico as $atr => $valorAtr){
-
-                $usuarioPrueba->{$atr} = $valorAtr;
-            }
-            //var_dump($usuarioPrueba);
-            if($usuarioPrueba->GetUsuario() == $nombreUsuario){
-                    
-                $estado = true;
-                return $estado;
-            }
-            */
-        }
-
-        return $estado;
+        return $resultado;
     }
 
     function agregarUsuario($usuario, $contrasena){
@@ -87,15 +86,15 @@
 
         $tempUsuario = new Usuario();
 
-        $tempUsuario->SetUsuario($usuario);
-        $tempUsuario->SetContrasena($contrasena);
+        $tempUsuario->setUsuario($usuario);
+        $tempUsuario->setContrasena($contrasena);
 
         array_push($usuariosArray, $tempUsuario);
-        //var_dump($usuariosArray);
+        var_dump($usuariosArray);
 
-        $usuarioAgregado = json_encode($usuariosArray);
+        $usuariosString = json_encode($usuariosArray);
 
-        escribirArchivoUsuarios($usuarioAgregado);
+        escribirArchivoUsuarios($usuariosString);
     }
 
 ?>

@@ -16,6 +16,20 @@
 
         $nombre = $_POST['usuario'];
         $contrasena = $_POST['contra'];
+ 
+        if( buscarNombreUsuario($nombre, $contrasena)){
+            echo 'perfil.html';
+        }
+        else{
+            echo 'Usuario o contraseña incorrecta';
+        }
+    }
+
+    /*
+    if( isset($_POST['usuario']) && isset($_POST['contra']) ){
+
+        $nombre = $_POST['usuario'];
+        $contrasena = $_POST['contra'];
         
         if( compararContrasena( leerArchivo('Subidas/' . $nombre . '.txt'), $contrasena ) ){
             echo 'perfil.html';
@@ -24,6 +38,7 @@
             echo 'Contraseña incorrecta';
         }
     }
+    */
 
     if( isset($_POST['usuarioNuevo']) ){
 
