@@ -25,21 +25,6 @@
         }
     }
 
-    /*
-    if( isset($_POST['usuario']) && isset($_POST['contra']) ){
-
-        $nombre = $_POST['usuario'];
-        $contrasena = $_POST['contra'];
-        
-        if( compararContrasena( leerArchivo('Subidas/' . $nombre . '.txt'), $contrasena ) ){
-            echo 'perfil.html';
-        }
-        else{
-            echo 'Contraseña incorrecta';
-        }
-    }
-    */
-
     if( isset($_POST['usuarioNuevo']) ){
 
         $usuario_nuevo = $_POST['usuarioNuevo'];

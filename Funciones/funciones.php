@@ -18,7 +18,7 @@
         }
 
         $tempUsuario = new Usuario();
-        $tempUsuario->setUsuario($usuariosArray[$resultado]->{"usuario"});
+        $tempUsuario->setNombre($usuariosArray[$resultado]->{"usuario"});
         $tempUsuario->setContrasena($usuariosArray[$resultado]->{"contrasena"});
 
         if($tempUsuario->getContrasena() == $contrasenaUsuario){
@@ -86,7 +86,7 @@
 
         $tempUsuario = new Usuario();
 
-        $tempUsuario->setUsuario($usuario);
+        $tempUsuario->setNombre($usuario);
         $tempUsuario->setContrasena($contrasena);
 
         array_push($usuariosArray, $tempUsuario);
